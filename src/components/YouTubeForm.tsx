@@ -56,6 +56,21 @@ const YouTubeForm = () => {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                     message: "invalid email address",
                   },
+                  validate: {
+                    required: (value) => !!value,
+                    notAdmin: (value) => {
+                      return (
+                        value !== "admin@example.com" ||
+                        "enter a different email"
+                      );
+                    },
+                    notBlackListed: (value) => {
+                      return (
+                        !value.endsWith("baddomain.com") ||
+                        "this domain is not supported"
+                      );
+                    },
+                  },
                 })}
               />
               {errors.email && (
