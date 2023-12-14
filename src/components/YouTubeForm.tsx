@@ -12,13 +12,15 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 type YouTubeFormProps = {};
+let renderCount = 0;
 
 const YouTubeForm: React.FC<YouTubeFormProps> = () => {
   const form = useForm();
   const { register, control } = form;
-
+  renderCount++;
   return (
     <>
+      <h1>number of rerender: {renderCount / 2}</h1>
       <form action="">
         <Card>
           <CardBody as={Stack} spacing={"10px"}>
