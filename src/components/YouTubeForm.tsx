@@ -11,17 +11,22 @@ import {
 import React from "react";
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
-type YouTubeFormProps = {};
-let renderCount = 0;
 
-const YouTubeForm: React.FC<YouTubeFormProps> = () => {
-  const form = useForm();
-  const { register, control } = form;
-  renderCount++;
+type FormValues = {
+  username: string;
+  email: string;
+  channel: string;
+};
+const YouTubeForm = () => {
+  const form = useForm<FormValues>();
+  const { register, control, handleSubmit } = form;
+
+  const onSubmit = (data: FormValues) => {
+    console.log("form submitted", data);
+  };
   return (
     <>
-      <h1>number of rerender: {renderCount / 2}</h1>
-      <form action="">
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Card>
           <CardBody as={Stack} spacing={"10px"}>
             <FormControl>
