@@ -4,6 +4,7 @@ import {
   CardBody,
   CardFooter,
   FormControl,
+  FormHelperText,
   FormLabel,
   Input,
   Stack,
@@ -18,7 +19,8 @@ type FormValues = {
 };
 const YouTubeForm = () => {
   const form = useForm<FormValues>();
-  const { register, control, handleSubmit } = form;
+  const { register, control, handleSubmit, formState } = form;
+  const { errors } = formState;
 
   const onSubmit = (data: FormValues) => {
     console.log("form submitted", data);
@@ -33,15 +35,22 @@ const YouTubeForm = () => {
               <Input
                 id="username"
                 type="text"
+                isInvalid={!!errors.username}
                 {...register("username", {
                   required: { value: true, message: "Username is required" },
                 })}
               />
+              {errors.username && (
+                <FormHelperText color={"red"}>
+                  {errors.username.message}
+                </FormHelperText>
+              )}
             </FormControl>
             <FormControl>
               <FormLabel>Email</FormLabel>
               <Input
                 id="email"
+                isInvalid={!!errors.email}
                 {...register("email", {
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -49,10 +58,27 @@ const YouTubeForm = () => {
                   },
                 })}
               />
+              {errors.email && (
+                <FormHelperText color={"red"}>
+                  {errors.email.message}
+                </FormHelperText>
+              )}
             </FormControl>
             <FormControl id="channel">
               <FormLabel>Channel</FormLabel>
-              <Input id="channel" type="text" {...register("channel")} />
+              <Input
+                isInvalid={!!errors.channel}
+                id="channel"
+                type="text"
+                {...register("channel", {
+                  required: { value: true, message: "Channel is required" },
+                })}
+              />
+              {errors.channel && (
+                <FormHelperText color={"red"}>
+                  {errors.channel.message}
+                </FormHelperText>
+              )}
             </FormControl>
           </CardBody>
           <CardFooter>
