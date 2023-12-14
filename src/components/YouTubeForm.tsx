@@ -9,10 +9,11 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import React from "react";
-
+import { useForm } from "react-hook-form";
 type YouTubeFormProps = {};
 
 const YouTubeForm: React.FC<YouTubeFormProps> = () => {
+  const form = useForm();
   return (
     <form action="">
       <Card>
