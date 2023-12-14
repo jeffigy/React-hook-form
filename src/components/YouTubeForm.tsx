@@ -14,21 +14,23 @@ type YouTubeFormProps = {};
 
 const YouTubeForm: React.FC<YouTubeFormProps> = () => {
   const form = useForm();
+  const { register } = form;
+
   return (
     <form action="">
       <Card>
         <CardBody as={Stack} spacing={"10px"}>
           <FormControl>
             <FormLabel>Username</FormLabel>
-            <Input id="username" name="username" type="text" />
+            <Input id="username" type="text" {...register("username")} />
           </FormControl>
           <FormControl>
             <FormLabel>Email</FormLabel>
-            <Input id="email" name="email" type="email" />
+            <Input id="email" type="email" {...register("email")} />
           </FormControl>
           <FormControl id="channel">
             <FormLabel>Channel</FormLabel>
-            <Input id="channel" name="channel" type="text" />
+            <Input id="channel" type="text" {...register("channel")} />
           </FormControl>
         </CardBody>
         <CardFooter>
