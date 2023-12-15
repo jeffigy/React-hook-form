@@ -53,12 +53,16 @@ const YouTubeForm = () => {
       };
     },
   });
-  const { register, control, handleSubmit, formState, watch } = form;
+  const { register, control, handleSubmit, formState, watch, getValues } = form;
   const { errors } = formState;
   const { fields, append, remove } = useFieldArray({
     name: "phNumbers",
     control,
   });
+
+  const handleGetValues = () => {
+    console.log(getValues("social.twitter"));
+  };
 
   // watches for changes in the username and email fields
   const watchUsername = watch(["username", "email"]);
@@ -316,9 +320,17 @@ const YouTubeForm = () => {
               )}
             </FormControl>
           </CardBody>
-          <CardFooter>
+          <CardFooter as={Stack}>
             <Button w={"full"} type="submit" colorScheme="blue">
               Submit
+            </Button>
+            <Button
+              w={"full"}
+              onClick={handleGetValues}
+              type="submit"
+              colorScheme="blue"
+            >
+              Get values
             </Button>
           </CardFooter>
         </Card>
