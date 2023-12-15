@@ -3,16 +3,20 @@ import {
   Card,
   CardBody,
   CardFooter,
+  Flex,
   FormControl,
   FormHelperText,
   FormLabel,
+  Heading,
   IconButton,
   Input,
   Stack,
+  Text,
 } from "@chakra-ui/react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
+import { useEffect } from "react";
 
 type FormValues = {
   username: string;
@@ -49,18 +53,31 @@ const YouTubeForm = () => {
       };
     },
   });
-  const { register, control, handleSubmit, formState } = form;
+  const { register, control, handleSubmit, formState, watch } = form;
   const { errors } = formState;
   const { fields, append, remove } = useFieldArray({
     name: "phNumbers",
     control,
   });
 
+  // watches for changes in the username and email fields
+  const watchUsername = watch(["username", "email"]);
+
+  //watches all values in the form
+  const watchForm = watch();
+
   const onSubmit = (data: FormValues) => {
     console.log("form submitted", data);
   };
+  useEffect(() => {
+    watch((value) => {
+      console.log("watch all", value);
+    });
+  }, [watch]);
   return (
-    <>
+    <Flex direction={"column"}>
+      <Heading as={"h1"}>watching: {watchUsername}</Heading>
+      <Text as={"h1"}>watching all: {JSON.stringify(watchForm)}</Text>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <Card>
           <CardBody as={Stack} spacing={"10px"}>
@@ -307,7 +324,7 @@ const YouTubeForm = () => {
         </Card>
       </form>
       <DevTool control={control} />
-    </>
+    </Flex>
   );
 };
 export default YouTubeForm;
