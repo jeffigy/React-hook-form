@@ -53,7 +53,15 @@ const YouTubeForm = () => {
       };
     },
   });
-  const { register, control, handleSubmit, formState, watch, getValues } = form;
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState,
+    watch,
+    getValues,
+    setValue,
+  } = form;
   const { errors } = formState;
   const { fields, append, remove } = useFieldArray({
     name: "phNumbers",
@@ -62,6 +70,13 @@ const YouTubeForm = () => {
 
   const handleGetValues = () => {
     console.log(getValues("social.twitter"));
+  };
+
+  const handleSetValues = () => {
+    setValue("social.twitter", "https://twitter.com/andrew_j_mead", {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
   };
 
   // watches for changes in the username and email fields
@@ -331,6 +346,14 @@ const YouTubeForm = () => {
               colorScheme="blue"
             >
               Get values
+            </Button>
+            <Button
+              w={"full"}
+              onClick={handleSetValues}
+              type="submit"
+              colorScheme="blue"
+            >
+              set values
             </Button>
           </CardFooter>
         </Card>
