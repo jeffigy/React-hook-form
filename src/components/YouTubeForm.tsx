@@ -6,11 +6,13 @@ import {
   FormControl,
   FormHelperText,
   FormLabel,
+  IconButton,
   Input,
   Stack,
 } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
+import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 
 type FormValues = {
   username: string;
@@ -21,6 +23,9 @@ type FormValues = {
     twitter: string;
   };
   phoneNumbers: string[];
+  phNumbers: {
+    number: string;
+  }[];
 };
 const YouTubeForm = () => {
   const form = useForm<FormValues>({
@@ -36,11 +41,16 @@ const YouTubeForm = () => {
           twitter: "",
         },
         phoneNumbers: ["", ""],
+        phNumbers: [{ number: "" }],
       };
     },
   });
   const { register, control, handleSubmit, formState } = form;
   const { errors } = formState;
+  const { fields, append, remove } = useFieldArray({
+    name: "phNumbers",
+    control,
+  });
 
   const onSubmit = (data: FormValues) => {
     console.log("form submitted", data);
@@ -214,6 +224,42 @@ const YouTubeForm = () => {
                 </FormHelperText>
               )}
             </FormControl>
+
+            <>
+              {fields.map((field, index) => {
+                return (
+                  <FormControl id="phNumbers">
+                    <FormLabel>Phone Numbers</FormLabel>
+                    <Input
+                      key={field.id}
+                      isInvalid={!!errors.phNumbers?.[index]?.number}
+                      id={`phNumbers.${index}.number`}
+                      type="text"
+                      {...register(`phNumbers.${index}.number` as const, {
+                        required: "Phone number is required",
+                        pattern: {
+                          value:
+                            /^(?:\+63|0)?(?:\d{11}|\d{3}-\d{4}-\d{3}|\d{3}-\d{3}-\d{4})$/,
+                          message: "Invalid phone number",
+                        },
+                      })}
+                    />
+                    {index > 0 && (
+                      <IconButton
+                        aria-label="remove phone number"
+                        onClick={() => remove(index)}
+                        icon={<MinusIcon />}
+                      />
+                    )}
+                  </FormControl>
+                );
+              })}
+              <IconButton
+                aria-label="add phone number"
+                onClick={() => append({ number: "" })}
+                icon={<AddIcon />}
+              />
+            </>
           </CardBody>
           <CardFooter>
             <Button w={"full"} type="submit" colorScheme="blue">
