@@ -16,6 +16,10 @@ type FormValues = {
   username: string;
   email: string;
   channel: string;
+  social: {
+    facebook: string;
+    twitter: string;
+  };
 };
 const YouTubeForm = () => {
   const form = useForm<FormValues>({
@@ -26,6 +30,10 @@ const YouTubeForm = () => {
         username: data.username,
         email: data.email,
         channel: "",
+        social: {
+          facebook: "",
+          twitter: "",
+        },
       };
     },
   });
@@ -104,6 +112,18 @@ const YouTubeForm = () => {
                   {errors.channel.message}
                 </FormHelperText>
               )}
+            </FormControl>
+            <FormControl id="twitter">
+              <FormLabel>Twitter</FormLabel>
+              <Input id="twitter" type="text" {...register("social.twitter")} />
+            </FormControl>
+            <FormControl id="facebook">
+              <FormLabel>Facebook</FormLabel>
+              <Input
+                id="facebook"
+                type="text"
+                {...register("social.facebook")}
+              />
             </FormControl>
           </CardBody>
           <CardFooter>
