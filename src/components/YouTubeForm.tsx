@@ -20,6 +20,7 @@ type FormValues = {
     facebook: string;
     twitter: string;
   };
+  phoneNumbers: string[];
 };
 const YouTubeForm = () => {
   const form = useForm<FormValues>({
@@ -34,6 +35,7 @@ const YouTubeForm = () => {
           facebook: "",
           twitter: "",
         },
+        phoneNumbers: ["", ""],
       };
     },
   });
@@ -115,15 +117,102 @@ const YouTubeForm = () => {
             </FormControl>
             <FormControl id="twitter">
               <FormLabel>Twitter</FormLabel>
-              <Input id="twitter" type="text" {...register("social.twitter")} />
+              <Input
+                isInvalid={!!errors.social?.twitter}
+                id="twitter"
+                type="url"
+                {...register("social.twitter", {
+                  required: "Twitter is required",
+                  pattern: {
+                    value: /^https:\/\/twitter\.com\/[a-zA-Z0-9_]{1,15}$/,
+                    message: "Invalid Twitter address",
+                  },
+                  validate: {
+                    notBlackListed: (value) => {
+                      return (
+                        !value.endsWith("badtwitter.com") ||
+                        "This domain is not supported"
+                      );
+                    },
+                  },
+                })}
+              />
+              {errors.social?.twitter && (
+                <FormHelperText color={"red"}>
+                  {errors.social?.twitter.message}
+                </FormHelperText>
+              )}
             </FormControl>
             <FormControl id="facebook">
               <FormLabel>Facebook</FormLabel>
               <Input
+                isInvalid={!!errors.social?.facebook}
                 id="facebook"
                 type="text"
-                {...register("social.facebook")}
+                {...register("social.facebook", {
+                  required: "Facebook is required",
+                  pattern: {
+                    value: /^https:\/\/www\.facebook\.com\/[a-zA-Z0-9_]{1,15}$/,
+                    message: "Invalid Facebook address",
+                  },
+                  validate: {
+                    notBlackListed: (value) => {
+                      return (
+                        !value.endsWith("badfacebook.com") ||
+                        "This domain is not supported"
+                      );
+                    },
+                  },
+                })}
               />
+              {errors.social?.facebook && (
+                <FormHelperText color={"red"}>
+                  {errors.social?.facebook.message}
+                </FormHelperText>
+              )}
+            </FormControl>
+
+            <FormControl id="primary-phone">
+              <FormLabel>Primary Phone</FormLabel>
+              <Input
+                isInvalid={!!errors.phoneNumbers?.[0]}
+                id="primary-phone"
+                type="text"
+                {...register("phoneNumbers.0", {
+                  required: "Primary phone is required",
+                  pattern: {
+                    value:
+                      /^(?:\+63|0)?(?:\d{11}|\d{3}-\d{4}-\d{3}|\d{3}-\d{3}-\d{4})$/,
+                    message: "Invalid phone number",
+                  },
+                })}
+              />
+              {errors.phoneNumbers?.[0] && (
+                <FormHelperText color={"red"}>
+                  {errors.phoneNumbers?.[0].message}
+                </FormHelperText>
+              )}
+            </FormControl>
+            <FormControl id="secondary-phone">
+              <FormLabel>Secondary Phone</FormLabel>
+              <Input
+                isInvalid={!!errors.phoneNumbers?.[1]}
+                id="secondary-phone"
+                type="text"
+                {...register("phoneNumbers.1", {
+                  required: "Secondary phone is required",
+                  pattern: {
+                    value:
+                      /^(?:\+63|0)?(?:\d{11}|\d{3}-\d{4}-\d{3}|\d{3}-\d{3}-\d{4})$/,
+                    message: "Invalid phone number",
+                  },
+                })}
+              />
+              {errors.phoneNumbers?.[1] && (
+                <FormHelperText color={"red"}>
+                  {errors.phoneNumbers?.[1].message}
+                </FormHelperText>
+              )}
             </FormControl>
           </CardBody>
           <CardFooter>
