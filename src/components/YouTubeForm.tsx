@@ -26,6 +26,8 @@ type FormValues = {
   phNumbers: {
     number: string;
   }[];
+  age: number;
+  dob: Date;
 };
 const YouTubeForm = () => {
   const form = useForm<FormValues>({
@@ -42,6 +44,8 @@ const YouTubeForm = () => {
         },
         phoneNumbers: ["", ""],
         phNumbers: [{ number: "" }],
+        age: 0,
+        dob: new Date(),
       };
     },
   });
@@ -260,6 +264,40 @@ const YouTubeForm = () => {
                 icon={<AddIcon />}
               />
             </>
+            <FormControl id="age">
+              <FormLabel>Channel</FormLabel>
+              <Input
+                isInvalid={!!errors.age}
+                id="age"
+                type="number"
+                {...register("age", {
+                  valueAsNumber: true,
+                  required: { value: true, message: "Channel is required" },
+                })}
+              />
+              {errors.age && (
+                <FormHelperText color={"red"}>
+                  {errors.age.message}
+                </FormHelperText>
+              )}
+            </FormControl>
+            <FormControl id="dob">
+              <FormLabel>Channel</FormLabel>
+              <Input
+                isInvalid={!!errors.dob}
+                id="dob"
+                type="date"
+                {...register("dob", {
+                  valueAsDate: true,
+                  required: { value: true, message: "Channel is required" },
+                })}
+              />
+              {errors.dob && (
+                <FormHelperText color={"red"}>
+                  {errors.dob.message}
+                </FormHelperText>
+              )}
+            </FormControl>
           </CardBody>
           <CardFooter>
             <Button w={"full"} type="submit" colorScheme="blue">
