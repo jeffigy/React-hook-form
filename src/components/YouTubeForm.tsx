@@ -62,11 +62,27 @@ const YouTubeForm = () => {
     getValues,
     setValue,
   } = form;
-  const { errors, touchedFields, dirtyFields, isDirty, isValid } = formState;
+  const {
+    errors,
+    touchedFields,
+    dirtyFields,
+    isDirty,
+    isValid,
+    isSubmitting,
+    isSubmitSuccessful,
+    isSubmitted,
+  } = formState;
   const { fields, append, remove } = useFieldArray({
     name: "phNumbers",
     control,
   });
+
+  console.log(
+    "isSubmitSuccessful",
+    isSubmitSuccessful,
+    "isSubmitted",
+    isSubmitted
+  );
 
   console.log({
     touchedFieds: touchedFields,
@@ -349,6 +365,7 @@ const YouTubeForm = () => {
           </CardBody>
           <CardFooter as={Stack}>
             <Button
+              isLoading={isSubmitting}
               w={"full"}
               type="submit"
               colorScheme="blue"
