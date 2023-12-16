@@ -62,10 +62,16 @@ const YouTubeForm = () => {
     getValues,
     setValue,
   } = form;
-  const { errors } = formState;
+  const { errors, touchedFields, dirtyFields, isDirty } = formState;
   const { fields, append, remove } = useFieldArray({
     name: "phNumbers",
     control,
+  });
+
+  console.log({
+    touchedFieds: touchedFields,
+    dirtyFields: dirtyFields,
+    isDirty: isDirty,
   });
 
   const handleGetValues = () => {
