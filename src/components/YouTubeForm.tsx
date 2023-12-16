@@ -52,6 +52,9 @@ const YouTubeForm = () => {
         dob: new Date(),
       };
     },
+    mode: "onChange",
+    // modes are: onBlur, onChange, onSubmit, onTouched, all
+    // default is: onSubmit
   });
   const {
     register,
