@@ -191,6 +191,8 @@ const YouTubeForm = () => {
                       );
                     },
                   },
+                  // disabled: true,
+                  disabled: watch("social.facebook") === "test",
                 })}
               />
               {errors.social?.twitter && (
