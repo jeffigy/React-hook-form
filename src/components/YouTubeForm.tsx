@@ -13,7 +13,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm, useFieldArray, FieldErrors } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 import { useEffect } from "react";
@@ -94,6 +94,10 @@ const YouTubeForm = () => {
   const onSubmit = (data: FormValues) => {
     console.log("form submitted", data);
   };
+
+  const onError = (errors: FieldErrors<FormValues>) => {
+    console.log("form errors", errors);
+  };
   useEffect(() => {
     watch((value) => {
       console.log("watch all", value);
@@ -103,7 +107,7 @@ const YouTubeForm = () => {
     <Flex direction={"column"}>
       <Heading as={"h1"}>watching: {watchUsername}</Heading>
       <Text as={"h1"}>watching all: {JSON.stringify(watchForm)}</Text>
-      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+      <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
         <Card>
           <CardBody as={Stack} spacing={"10px"}>
             <FormControl>
@@ -192,7 +196,7 @@ const YouTubeForm = () => {
                     },
                   },
                   // disabled: true,
-                  disabled: watch("social.facebook") === "test",
+                  disabled: watch("social.facebook") === "test", // disables the field if the value of the facebook field is "test"
                 })}
               />
               {errors.social?.twitter && (
