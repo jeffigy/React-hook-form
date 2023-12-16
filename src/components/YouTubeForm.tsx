@@ -61,6 +61,7 @@ const YouTubeForm = () => {
     watch,
     getValues,
     setValue,
+    reset,
   } = form;
   const {
     errors,
@@ -118,7 +119,10 @@ const YouTubeForm = () => {
     watch((value) => {
       console.log("watch all", value);
     });
-  }, [watch]);
+    if (isSubmitSuccessful) {
+      reset();
+    }
+  }, [watch, isSubmitSuccessful, reset]);
   return (
     <Flex direction={"column"}>
       <Heading as={"h1"}>watching: {watchUsername}</Heading>
@@ -372,6 +376,9 @@ const YouTubeForm = () => {
               isDisabled={!isDirty || !isValid} // disables the submit button if the form is not dirty
             >
               Submit
+            </Button>
+            <Button onClick={() => reset()} w={"full"}>
+              reset
             </Button>
             <Button
               w={"full"}
