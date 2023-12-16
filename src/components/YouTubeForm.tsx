@@ -170,6 +170,16 @@ const YouTubeForm = () => {
                         "this domain is not supported"
                       );
                     },
+                    emailAvailable: async (value) => {
+                      const res = await fetch(
+                        "https://jsonplaceholder.typicode.com/users"
+                      );
+                      const data = await res.json();
+                      const found = data.find(
+                        (user: any) => user.email === value
+                      );
+                      return !found || "email already taken";
+                    },
                   },
                 })}
               />
@@ -373,7 +383,7 @@ const YouTubeForm = () => {
               w={"full"}
               type="submit"
               colorScheme="blue"
-              isDisabled={!isDirty || !isValid} // disables the submit button if the form is not dirty
+              isDisabled={!isDirty} // disables the submit button if the form is not dirty
             >
               Submit
             </Button>
