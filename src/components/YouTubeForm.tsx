@@ -62,7 +62,7 @@ const YouTubeForm = () => {
     getValues,
     setValue,
   } = form;
-  const { errors, touchedFields, dirtyFields, isDirty } = formState;
+  const { errors, touchedFields, dirtyFields, isDirty, isValid } = formState;
   const { fields, append, remove } = useFieldArray({
     name: "phNumbers",
     control,
@@ -348,7 +348,12 @@ const YouTubeForm = () => {
             </FormControl>
           </CardBody>
           <CardFooter as={Stack}>
-            <Button w={"full"} type="submit" colorScheme="blue">
+            <Button
+              w={"full"}
+              type="submit"
+              colorScheme="blue"
+              isDisabled={!isDirty || !isValid} // disables the submit button if the form is not dirty
+            >
               Submit
             </Button>
             <Button
