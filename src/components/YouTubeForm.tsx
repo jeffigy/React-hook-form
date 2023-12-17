@@ -65,6 +65,7 @@ const YouTubeForm = () => {
     getValues,
     setValue,
     reset,
+    trigger,
   } = form;
   const {
     errors,
@@ -404,6 +405,14 @@ const YouTubeForm = () => {
             <Button
               w={"full"}
               onClick={handleSetValues}
+              type="submit"
+              colorScheme="blue"
+            >
+              set values
+            </Button>
+            <Button
+              w={"full"}
+              onClick={() => trigger("channel")}
               type="submit"
               colorScheme="blue"
             >
