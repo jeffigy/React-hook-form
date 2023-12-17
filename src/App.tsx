@@ -3,13 +3,14 @@ import React from "react";
 import YouTubeForm from "./components/YouTubeForm";
 import YupForm from "./components/YupForm";
 
-type AppProps = {};
+import ZodForm from "./components/ZodForm";
 
-const App: React.FC<AppProps> = () => {
+const App = () => {
   return (
     <Flex minH={"100vh"} w={"full"} justify={"center"} p={"20px"}>
       {/* <YouTubeForm /> */}
-      <YupForm />
+      {/* <YupForm /> */}
+      <ZodForm />
     </Flex>
   );
 };
